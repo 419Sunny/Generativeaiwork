@@ -5,6 +5,17 @@ const courseController = require('./controllers/courseController');
 const app = express();
 const PORT = 5000;
 
+// CORS middleware for frontend requests from another origin (e.g. Live Server)
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(204);
+    }
+    next();
+});
+
 // Middleware to parse JSON bodies
 app.use(express.json());
 
